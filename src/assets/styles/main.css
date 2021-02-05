@@ -1,1 +1,5 @@
 @import url(sanitize.css);
+
+html, body {
+  overflow: hidden;
+}
