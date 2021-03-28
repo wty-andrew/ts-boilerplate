@@ -1,6 +1,7 @@
 import * as THREE from 'three/build/three.module'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import * as dat from 'dat.gui'
+import Stats from 'stats.js'
 
 import './assets/styles/main.css'
 
@@ -11,6 +12,10 @@ let renderer: THREE.WebGLRenderer
 let cube: THREE.Mesh
 
 const gui: dat.GUI = new dat.GUI()
+
+const stats = new Stats()
+stats.showPanel(0)
+document.body.appendChild(stats.dom)
 
 const canvas: HTMLCanvasElement = <HTMLCanvasElement>(
   document.getElementById('canvas')
@@ -49,9 +54,13 @@ const init = () => {
 }
 
 const animate = () => {
+  stats.begin()
+
   requestAnimationFrame(animate)
   controls.update()
   renderer.render(scene, camera)
+
+  stats.end()
 }
 
 const resize = () => {
