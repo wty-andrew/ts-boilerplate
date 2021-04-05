@@ -1,3 +1,1 @@
-import './assets/styles/main.css'
-
-document.body.textContent = 'Hello World'
+export const greet = (name: string): string => `Hello, ${name}`

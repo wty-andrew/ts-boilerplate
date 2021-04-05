@@ -1,5 +1,5 @@
-import '../index'
+import { greet } from '../index'
 
-test('render without crashing', () => {
-  expect(document.body).toMatchSnapshot()
+test('greet', () => {
+  expect(greet('John')).toEqual('Hello, John')
 })
