@@ -31,5 +31,10 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Create envfile
+        env:
+          TEST_ENV_FILE_CONTENT: ${{ secrets.TEST_ENV_FILE_CONTENT }}
+        run: echo "$TEST_ENV_FILE_CONTENT" >> config/test.env
+
       - name: Test
         run: yarn test

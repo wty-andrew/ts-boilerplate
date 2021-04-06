@@ -3,11 +3,13 @@ import express, { Application } from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 
+import { isDev } from './config'
+
 const app: Application = express()
 
 app.use(cors())
 
-if (process.env.NODE_ENV === 'development') {
+if (isDev()) {
   app.use(morgan('dev'))
 }
 
