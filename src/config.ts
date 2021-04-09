@@ -20,3 +20,4 @@ const env = <K extends keyof NodeJS.ProcessEnv>(
 }
 
 export const PORT = env('PORT', 3000)
+export const MONGODB_URI = env('MONGODB_URI')
