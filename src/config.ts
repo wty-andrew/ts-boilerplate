@@ -19,7 +19,12 @@ const env = <K extends keyof NodeJS.ProcessEnv>(
   return value || default_
 }
 
-export const PORT = env('PORT', 3000)
+export const PORT = Number(env('PORT', 3000))
 export const MONGODB_URI = env('MONGODB_URI')
 export const JWT_SECRET = env('JWT_SECRET')
 export const JWT_EXPIRE = env('JWT_EXPIRE')
+export const SMTP_HOST = env('SMTP_HOST')
+export const SMTP_PORT = Number(env('SMTP_PORT', 587))
+export const SMTP_USERNAME = env('SMTP_USERNAME')
+export const SMTP_PASSWORD = env('SMTP_PASSWORD')
+export const BASE_URL = env('BASE_URL')
