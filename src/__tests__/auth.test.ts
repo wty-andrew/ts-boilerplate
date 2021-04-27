@@ -86,6 +86,7 @@ describe('POST /auth/signup', () => {
     expect(resp.body).toMatchObject({
       success: false,
       message: expect.any(String),
+      error: expect.anything(),
     })
     expect(cookies['x-auth']).toBeUndefined()
   })

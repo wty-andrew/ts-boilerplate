@@ -5,6 +5,13 @@ import jwt from 'jsonwebtoken'
 import { JWT_SECRET, JWT_EXPIRE } from '../config'
 import { JwtPayload } from '../common/types'
 import { ErrorResponse } from '../common/errors'
+import {
+  fieldsValidation,
+  checkUsername,
+  checkEmail,
+  checkPassword,
+  checkToken,
+} from '../common/validation'
 import { asyncHandler } from '../middlewares/error-handler'
 import User, { Role, UserDocument } from '../models/User'
 import Token from '../models/Token'
@@ -25,6 +32,8 @@ const hashToken = (token: string): string =>
   crypto.createHash('sha256').update(token).digest('hex')
 
 export const signup: RequestHandler = asyncHandler(async (req, res) => {
+  await fieldsValidation(checkUsername, checkEmail, checkPassword)(req)
+
   const { name, email, password } = req.body
 
   const existUser = await User.findOne({ email })
@@ -73,6 +82,8 @@ export const verify: RequestHandler = (req, res) => {
 
 export const activateAccount: RequestHandler = asyncHandler(
   async (req, res) => {
+    await fieldsValidation(checkEmail, checkToken)(req)
+
     const { email, token: activationToken } = req.body
 
     const token = await Token.findOne({ value: hashToken(activationToken) })
@@ -97,6 +108,8 @@ export const activateAccount: RequestHandler = asyncHandler(
 
 export const resendActivation: RequestHandler = asyncHandler(
   async (req, res) => {
+    await fieldsValidation(checkEmail)(req)
+
     const { email } = req.body
 
     const user = await User.findOne({ email })
@@ -118,6 +131,8 @@ export const resendActivation: RequestHandler = asyncHandler(
 )
 
 export const forgotPassword: RequestHandler = asyncHandler(async (req, res) => {
+  await fieldsValidation(checkEmail)(req)
+
   const { email } = req.body
 
   const user = await User.findOne({ email })
@@ -135,6 +150,8 @@ export const forgotPassword: RequestHandler = asyncHandler(async (req, res) => {
 })
 
 export const resetPassword: RequestHandler = asyncHandler(async (req, res) => {
+  await fieldsValidation(checkEmail, checkPassword, checkToken)(req)
+
   const { email, password, token: resetToken } = req.body
 
   const token = await Token.findOne({ value: hashToken(resetToken) })
