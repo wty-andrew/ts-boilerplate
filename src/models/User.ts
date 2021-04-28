@@ -8,14 +8,14 @@ export enum Role {
   Guest = 'Guest',
 }
 
-interface User {
+export interface IUser {
   name: string
   email: string
   password?: string
   role: Role
 }
 
-export interface UserDocument extends User, Document {
+export interface UserDocument extends IUser, Document {
   verifyPassword(password: string): Promise<boolean>
 }
 

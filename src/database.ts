@@ -12,6 +12,7 @@ export const connectToDatabase = async (
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
     serverSelectionTimeoutMS: timeoutMS,
   })
   return connection

@@ -2,9 +2,10 @@ import request from 'supertest'
 import { mocked } from 'ts-jest/utils'
 
 import { connectToDatabase, disconnectFromDatabase } from '../database'
-import User, { Role } from '../models/User'
+import User, { Role, UserDocument } from '../models/User'
 import Token from '../models/Token'
 import app from '../app'
+import { generateUser } from './fixtures/users'
 import * as emailService from '../services/email'
 jest.mock('../services/email')
 
@@ -16,49 +17,25 @@ beforeAll(async () => await connectToDatabase(process.env.__MONGODB_URI__))
 
 afterAll(disconnectFromDatabase)
 
-const users = [
-  {
-    name: 'Andy',
-    email: 'andy@example.com',
-    password: 'p4$$w0rd',
-  },
-  {
-    name: 'Bob',
-    email: 'bob@example.com',
-    password: 'abcd1234',
-  },
-]
-
-const newUser1 = {
-  name: 'Carter',
-  email: 'carter@example.com',
-  password: '12345678',
-}
-
-const newUser2 = {
-  name: 'David',
-  email: 'david@example.com',
-  password: '87654321',
-}
+const existUser = generateUser()
 
 beforeEach(async () => {
-  mockedEmailService.sendConfirmationEmail.mockClear()
-  mockedEmailService.sendForgotPasswordEmail.mockClear()
-  mockedEmailService.sendPasswordResetEmail.mockClear()
+  jest.resetAllMocks()
 
   await User.deleteMany()
   await Token.deleteMany()
-  for (const user of users) {
-    await new User(user).save()
-  }
+  await User.create(existUser)
 })
 
 describe('POST /auth/signup', () => {
   it('should create a new user and send confirmation email', async () => {
-    const resp = await request(app).post('/auth/signup').send(newUser1)
+    const { name, email, password } = generateUser()
+
+    const resp = await request(app)
+      .post('/auth/signup')
+      .send({ name, email, password })
     const cookies = extractCookies(resp.get('Set-Cookie'))
 
-    const { name, email } = newUser1
     expect(resp.status).toBe(201)
     expect(resp.body).toMatchObject({
       success: true,
@@ -77,9 +54,11 @@ describe('POST /auth/signup', () => {
   })
 
   it('should not create user with malformed field', async () => {
+    const { name, password } = generateUser()
+
     const resp = await request(app)
       .post('/auth/signup')
-      .send({ ...newUser2, email: 'bad@email@address' })
+      .send({ name, email: 'bad@email@address', password })
     const cookies = extractCookies(resp.get('Set-Cookie'))
 
     expect(resp.status).toBe(400)
@@ -92,9 +71,11 @@ describe('POST /auth/signup', () => {
   })
 
   it('should not create user if email in use', async () => {
+    const { name, password } = generateUser()
+
     const resp = await request(app)
       .post('/auth/signup')
-      .send({ ...newUser2, email: users[0].email })
+      .send({ name, email: existUser.email, password })
     const cookies = extractCookies(resp.get('Set-Cookie'))
 
     expect(resp.status).toBe(400)
@@ -108,19 +89,17 @@ describe('POST /auth/signup', () => {
 
 describe('POST /auth/login', () => {
   it('should login user', async () => {
-    const resp = await request(app).post('/auth/login').send({
-      email: users[0].email,
-      password: users[0].password,
-    })
+    const { name, email, password } = existUser
+
+    const resp = await request(app)
+      .post('/auth/login')
+      .send({ email, password })
     const cookies = extractCookies(resp.get('Set-Cookie'))
 
     expect(resp.status).toBe(200)
     expect(resp.body).toMatchObject({
       success: true,
-      data: {
-        name: users[0].name,
-        email: users[0].email,
-      },
+      data: { name, email },
     })
     expect(cookies['x-auth']).toMatchObject({
       value: expect.stringMatching(/.+/),
@@ -128,12 +107,11 @@ describe('POST /auth/login', () => {
   })
 
   it('should not login user with wrong credentials', async () => {
+    const { email, password } = existUser
+
     const resp = await request(app)
       .post('/auth/login')
-      .send({
-        email: users[0].email,
-        password: users[0].password + '0',
-      })
+      .send({ email, password: password + '0' })
     const cookies = extractCookies(resp.get('Set-Cookie'))
 
     expect(resp.status).toBe(401)
@@ -159,10 +137,11 @@ describe('GET /auth/logout', () => {
 
 describe('GET /auth/verify', () => {
   it('should return 200 for logged in user', async () => {
-    const { headers } = await request(app).post('/auth/login').send({
-      email: users[0].email,
-      password: users[0].password,
-    })
+    const { name, email, password } = existUser
+
+    const { headers } = await request(app)
+      .post('/auth/login')
+      .send({ email, password })
     const resp = await request(app)
       .get('/auth/verify')
       .set('Cookie', headers['set-cookie'])
@@ -171,10 +150,7 @@ describe('GET /auth/verify', () => {
     expect(resp.status).toBe(200)
     expect(resp.body).toMatchObject({
       success: true,
-      data: {
-        name: users[0].name,
-        email: users[0].email,
-      },
+      data: { name, email },
     })
     expect(cookies['x-auth']).toMatchObject({
       value: expect.stringMatching(/.+/),
@@ -196,34 +172,25 @@ describe('GET /auth/verify', () => {
 
 describe('POST /auth/activation', () => {
   it('should change user role from Guest to User', async () => {
-    await request(app).post('/auth/signup').send(newUser1)
+    const { name, email, password } = generateUser()
+    await request(app).post('/auth/signup').send({ name, email, password })
 
     const token = mockedEmailService.sendConfirmationEmail.mock.calls[0][1]
-    await request(app).post('/auth/activation').send({
-      email: newUser1.email,
-      token,
-    })
+    await request(app).post('/auth/activation').send({ email, token })
 
-    const resp = await request(app).post('/auth/login').send({
-      email: newUser1.email,
-      password: newUser1.password,
-    })
-
-    expect(resp.body).toMatchObject({
-      success: true,
-      data: { role: Role.User },
-    })
+    const savedUser = (await User.findOne({ email })) as UserDocument
+    expect(savedUser.role).toBe(Role.User)
   })
 })
 
 describe('POST /auth/resend-activation', () => {
   it('should send confirmation email', async () => {
-    const { name, email } = newUser1
-    await request(app).post('/auth/signup').send(newUser1)
+    const { name, email, password } = generateUser()
 
-    const resp = await request(app).post('/auth/resend-activation').send({
-      email,
-    })
+    await request(app).post('/auth/signup').send({ name, email, password })
+    const resp = await request(app)
+      .post('/auth/resend-activation')
+      .send({ email })
 
     expect(resp.status).toBe(200)
     expect(resp.body).toMatchObject({ success: true })
@@ -239,7 +206,8 @@ describe('POST /auth/resend-activation', () => {
 
 describe('POST /auth/forgot-password', () => {
   it('should send password reset instruction email', async () => {
-    const { name, email } = users[0]
+    const { name, email } = existUser
+
     const resp = await request(app)
       .post('/auth/forgot-password')
       .send({ email })
@@ -259,16 +227,15 @@ describe('POST /auth/forgot-password', () => {
 
 describe('POST /auth/reset-password', () => {
   it('should reset user password and send reset success email', async () => {
-    const { name, email, password } = users[0]
+    const { name, email, password } = existUser
     const newPassword = password + '0'
+
     await request(app).post('/auth/forgot-password').send({ email })
 
     const token = mockedEmailService.sendForgotPasswordEmail.mock.calls[0][1]
-    const resp = await request(app).post('/auth/reset-password').send({
-      email,
-      password: newPassword,
-      token,
-    })
+    const resp = await request(app)
+      .post('/auth/reset-password')
+      .send({ email, password: newPassword, token })
 
     expect(resp.status).toBe(200)
     expect(mockedEmailService.sendPasswordResetEmail).toHaveBeenCalledWith({
@@ -276,9 +243,7 @@ describe('POST /auth/reset-password', () => {
       address: email,
     })
 
-    const resp2 = await request(app)
-      .post('/auth/login')
-      .send({ email, password: newPassword })
-    expect(resp2.status).toBe(200)
+    const user = (await User.findOne({ email })) as UserDocument
+    expect(await user.verifyPassword(newPassword)).toBe(true)
   })
 })

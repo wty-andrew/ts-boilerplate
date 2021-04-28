@@ -1,5 +1,13 @@
 import { Request } from 'express'
-import { body, validationResult, ValidationChain } from 'express-validator'
+import {
+  body,
+  param,
+  validationResult,
+  ValidationChain,
+} from 'express-validator'
+import { ObjectID } from 'mongodb'
+
+import { Role } from '../models/User'
 
 export const fieldsValidation = (...rules: ValidationChain[]) => async (
   req: Request
@@ -10,6 +18,9 @@ export const fieldsValidation = (...rules: ValidationChain[]) => async (
   if (!errors.isEmpty()) errors.throw()
 }
 
+export const makeOptional = (rule: ValidationChain): ValidationChain =>
+  rule.optional()
+
 // common rules
 export const checkUsername = body('name')
   .isString()
@@ -17,7 +28,7 @@ export const checkUsername = body('name')
   .withMessage('Username cannot be empty')
 
 export const checkEmail = body('email', 'Invalid email address')
-  .normalizeEmail()
+  .normalizeEmail({ gmail_remove_dots: false })
   .isEmail()
 
 export const checkPassword = body('password')
@@ -25,4 +36,10 @@ export const checkPassword = body('password')
   .isLength({ min: 8 })
   .withMessage('Password must contain at least 8 characters')
 
+export const checkUserRole = body('role', 'Invalid role').isIn(
+  Object.values(Role)
+)
+
 export const checkToken = body('token').isString().notEmpty()
+
+export const checkObjectID = param('id', 'Invalid id').custom(ObjectID.isValid)
