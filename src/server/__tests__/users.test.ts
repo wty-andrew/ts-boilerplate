@@ -11,7 +11,7 @@ jest.mock('../middlewares/auth', () => {
 
   return Object.assign({}, jest.requireActual('../middlewares/auth'), {
     protect: passthrough,
-    permit: (..._: Role[]) => passthrough,
+    permit: (...roles: Role[]) => passthrough, // eslint-disable-line
   })
 })
 

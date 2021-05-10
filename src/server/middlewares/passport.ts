@@ -2,8 +2,8 @@ import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import { Strategy as JwtStrategy } from 'passport-jwt'
 
-import { JwtPayload } from '../common/types'
 import { JWT_SECRET } from '../config'
+import { JwtPayload } from '../common/types'
 import User from '../models/User'
 
 passport.use(

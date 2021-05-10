@@ -5,8 +5,8 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Debug Program",
-        "program": "${workspaceFolder}/src/index.ts",
+        "name": "Debug Server",
+        "program": "${workspaceFolder}/src/server/index.ts",
         "request": "launch",
         "skipFiles": [
           "<node_internals>/**"

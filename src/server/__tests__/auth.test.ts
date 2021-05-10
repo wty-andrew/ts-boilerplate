@@ -9,7 +9,7 @@ import { generateUser } from './fixtures/users'
 import * as emailService from '../services/email'
 jest.mock('../services/email')
 
-import { extractCookies } from '../../jest/helpers'
+import { extractCookies } from './helpers'
 
 const mockedEmailService = mocked(emailService)
 

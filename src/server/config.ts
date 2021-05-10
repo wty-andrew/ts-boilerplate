@@ -1,8 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="./types/env.d.ts" />
 import path from 'path'
 import dotenv from 'dotenv'
 
 dotenv.config({
-  path: path.join(__dirname, `../config/${process.env.NODE_ENV}.env`),
+  path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`),
 })
 
 export const isProd = (): boolean => process.env.NODE_ENV === 'production'
