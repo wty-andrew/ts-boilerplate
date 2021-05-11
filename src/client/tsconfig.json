@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/client",
+    "rootDir": ".",
+    "lib": ["ESNext", "DOM"],
+    "jsx": "react-jsx",
+    "noEmit": true                         /* Currently build with parcel */
+  }
+}

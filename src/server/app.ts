@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import passport from 'passport'
 
-import { isDev } from './config'
+import { isDev, isProd } from './config'
 import './middlewares/passport'
 import router from './routes'
 import { errorHandler } from './middlewares/error-handler'
@@ -20,14 +20,13 @@ if (isDev()) {
 }
 
 app.use(express.json())
+if (isProd()) {
+  app.use(express.static(path.join(__dirname, '../client')))
+}
 app.use(express.static(path.join(__dirname, '../../public')))
 app.use(passport.initialize())
 
 router(app)
-
-app.get('/', (req, res) => {
-  res.status(200).send('ok')
-})
 
 app.use(errorHandler)
 

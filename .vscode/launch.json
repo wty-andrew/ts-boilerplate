@@ -19,6 +19,20 @@
         "env": {
           "NODE_ENV": "development"
         }
+      },
+      {
+        "name": "Debug Client",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:3001",
+        "webRoot": "${workspaceFolder}",
+        "breakOnLoad": true,
+        "pathMapping": {
+          "__parcel_source_root": "${webRoot}"
+        },
+        "skipFiles": [
+          "${workspaceFolder}/node_modules/**/*.js"
+        ]
       }
     ]
 }
