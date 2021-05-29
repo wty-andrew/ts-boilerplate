@@ -6,5 +6,8 @@
     "lib": ["ESNext", "DOM"],
     "jsx": "react-jsx",
     "noEmit": true                         /* Currently build with parcel */
-  }
+  },
+  "references": [
+    { "path": "../shared" }
+  ]
 }

@@ -2,17 +2,11 @@ import { Document, model, Model, Schema } from 'mongoose'
 import bcrypt from 'bcryptjs'
 import isEmail from 'validator/lib/isEmail'
 
-export enum Role {
-  Admin = 'Admin',
-  User = 'User',
-  Guest = 'Guest',
-}
+import { User, Role } from '../../shared/types/user'
+export { User, Role }
 
-export interface IUser {
-  name: string
-  email: string
+export interface IUser extends User {
   password?: string
-  role: Role
 }
 
 export interface UserDocument extends IUser, Document {

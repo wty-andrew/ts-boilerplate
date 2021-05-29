@@ -3,6 +3,7 @@
   "files": [],
   "references": [
     { "path": "./src/server" },
-    { "path": "./src/client" }
+    { "path": "./src/client" },
+    { "path": "./src/shared" }
   ]
 }

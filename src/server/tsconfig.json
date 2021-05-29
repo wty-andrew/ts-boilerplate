@@ -3,5 +3,8 @@
   "compilerOptions": {
     "outDir": "../../dist/server",
     "rootDir": "."
-  }
+  },
+  "references": [
+    { "path": "../shared" }
+  ]
 }
