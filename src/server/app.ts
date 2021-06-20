@@ -12,12 +12,17 @@ import { errorHandler } from './middlewares/error-handler'
 
 const app: Application = express()
 
-app.use(cors())
-app.use(cookieParser())
-
 if (isDev()) {
+  app.use(
+    cors({
+      credentials: true,
+      origin: (origin, callback) => callback(null, true),
+    })
+  )
   app.use(morgan('dev'))
 }
+
+app.use(cookieParser())
 
 app.use(express.json())
 if (isProd()) {
