@@ -5,6 +5,7 @@
     "rootDir": ".",
     "lib": ["ESNext", "DOM"],
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",   /* Make VSCode intellisense happy */
     "noEmit": true                         /* Currently build with parcel */
   },
   "references": [
