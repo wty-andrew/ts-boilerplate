@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../build/renderer",
+    "rootDir": ".",
+    "lib": ["ESNext", "DOM"],
+    "noEmit": true                         /* Currently build with parcel */
+  },
+}

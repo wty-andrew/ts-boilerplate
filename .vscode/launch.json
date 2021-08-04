@@ -5,12 +5,29 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "chrome",
+            "name": "Debug Main Process",
+            "type": "node",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}",
             "breakOnLoad": true,
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+            "args": ["./build/main/index.js"],
+            "outputCapture": "std",
+            "skipFiles": [
+              "<node_internals>/**",
+              "${workspaceFolder}/node_modules/**/*.js"
+            ],
+            "env": {
+              "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Debug Renderer Process",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": true,
             "pathMapping": {
               "__parcel_source_root": "${webRoot}"
             },

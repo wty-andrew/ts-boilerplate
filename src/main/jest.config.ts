@@ -1,0 +1,15 @@
+import { Config } from '@jest/types'
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import baseConfig from '../../jest.config'
+
+const config: Config.InitialOptions = {
+  ...baseConfig,
+  displayName: 'main',
+  testEnvironment: 'node',
+  rootDir: '.',
+  setupFilesAfterEnv: ['jest-extended'],
+}
+
+export default config
