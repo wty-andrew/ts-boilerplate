@@ -9,21 +9,28 @@ const startUrl = isDev
   ? 'http://localhost:3000'
   : `file://${path.join(__dirname, '../renderer/index.html')}`
 
-const createWindow = () => {
+const createWindow = async () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
   })
 
-  mainWindow.loadURL(startUrl)
+  await mainWindow.loadURL(startUrl)
 
   if (isDev) {
     mainWindow.webContents.openDevTools()
   }
 }
 
-app.on('ready', () => {
-  createWindow()
+app.on('ready', async () => {
+  if (isDev) {
+    const { default: installExtensions, REACT_DEVELOPER_TOOLS } = await import(
+      'electron-devtools-installer'
+    )
+    await installExtensions([REACT_DEVELOPER_TOOLS])
+  }
+
+  await createWindow()
 })
 
 app.on('window-all-closed', () => {
