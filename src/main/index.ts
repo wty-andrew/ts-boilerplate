@@ -13,13 +13,12 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+    },
   })
 
   await mainWindow.loadURL(startUrl)
-
-  if (isDev) {
-    mainWindow.webContents.openDevTools()
-  }
 }
 
 app.on('ready', async () => {
@@ -27,10 +26,16 @@ app.on('ready', async () => {
     const { default: installExtensions, REACT_DEVELOPER_TOOLS } = await import(
       'electron-devtools-installer'
     )
-    await installExtensions([REACT_DEVELOPER_TOOLS])
+    await installExtensions([REACT_DEVELOPER_TOOLS], {
+      loadExtensionOptions: { allowFileAccess: true },
+    })
   }
 
   await createWindow()
+
+  if (isDev) {
+    mainWindow.webContents.openDevTools()
+  }
 })
 
 app.on('window-all-closed', () => {
