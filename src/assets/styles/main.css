@@ -1,4 +1,4 @@
-@import url(sanitize.css);
+@import 'npm:sanitize.css/sanitize.css';
 
 html, body {
   overflow: hidden;
