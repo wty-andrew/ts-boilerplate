@@ -1,5 +1,3 @@
 import '../index'
 
-test('render without crashing', () => {
-  expect(document.body).toMatchSnapshot()
-})
+test.todo('render without crashing')

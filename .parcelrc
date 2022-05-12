@@ -1,0 +1,7 @@
+{
+  "extends": ["@parcel/config-default"],
+  "transformers": {
+    "*.{glsl,vert,frag}": ["@parcel/transformer-glsl"]
+  },
+  "reporters":  ["...", "parcel-reporter-static-files-copy"]
+}
