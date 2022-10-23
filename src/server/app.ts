@@ -1,5 +1,5 @@
 import path from 'path'
-import express, { Application } from 'express'
+import express, { Application, RequestHandler } from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
@@ -19,12 +19,13 @@ if (isDev()) {
       origin: (origin, callback) => callback(null, true),
     })
   )
-  app.use(morgan('dev'))
+  app.use(morgan('dev') as RequestHandler)
 }
 
+express.json()
 app.use(cookieParser())
 
-app.use(express.json())
+app.use(express.json() as RequestHandler)
 if (isProd()) {
   app.use(express.static(path.join(__dirname, '../client')))
 }

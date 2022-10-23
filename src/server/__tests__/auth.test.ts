@@ -1,5 +1,4 @@
 import request from 'supertest'
-import { mocked } from 'ts-jest/utils'
 
 import { connectToDatabase, disconnectFromDatabase } from '../database'
 import User, { Role, UserDocument } from '../models/User'
@@ -11,7 +10,7 @@ jest.mock('../services/email')
 
 import { extractCookies } from './helpers'
 
-const mockedEmailService = mocked(emailService)
+const mockedEmailService = jest.mocked(emailService)
 
 beforeAll(async () => await connectToDatabase(process.env.__MONGODB_URI__))
 

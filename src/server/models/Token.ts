@@ -1,7 +1,7 @@
-import { Document, model, Schema } from 'mongoose'
+import { Document, model, Schema, Types } from 'mongoose'
 
 interface Token {
-  userId: string
+  userId: Types.ObjectId
   value: string
   createdAt: Date
 }

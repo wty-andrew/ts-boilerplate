@@ -26,13 +26,11 @@ export const protect: RequestHandler = (req, res, next) => {
   })(req, res, next)
 }
 
-export const permit = (...roles: Role[]): RequestHandler => (
-  req,
-  res,
-  next
-) => {
-  if (!roles.includes((req.user as UserDocument).role))
-    return next(new ErrorResponse(403, 'Permission denied'))
+export const permit =
+  (...roles: Role[]): RequestHandler =>
+  (req, res, next) => {
+    if (!roles.includes((req.user as UserDocument).role))
+      return next(new ErrorResponse(403, 'Permission denied'))
 
-  next()
-}
+    next()
+  }

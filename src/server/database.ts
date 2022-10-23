@@ -9,10 +9,6 @@ export const connectToDatabase = async (
   })
 
   const { connection } = await mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
     serverSelectionTimeoutMS: timeoutMS,
   })
   return connection

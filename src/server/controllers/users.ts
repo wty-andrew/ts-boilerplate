@@ -9,7 +9,7 @@ import {
   checkEmail,
   checkPassword,
   checkUserRole,
-  checkObjectID,
+  checkObjectId,
 } from '../common/validation'
 import { asyncHandler } from '../middlewares/error-handler'
 import { ParsedQuery } from '../middlewares/parse-query'
@@ -28,7 +28,7 @@ export const getUsers: RequestHandler = asyncHandler(async (req, res) => {
 })
 
 export const getUser: RequestHandler = asyncHandler(async (req, res) => {
-  await fieldsValidation(checkObjectID)(req)
+  await fieldsValidation(checkObjectId)(req)
 
   const user = await User.findById(req.params.id)
   if (!user) throw new ErrorResponse(404, 'User not found')
@@ -60,7 +60,7 @@ export const createUser: RequestHandler = asyncHandler(async (req, res) => {
 
 export const updateUser: RequestHandler = asyncHandler(async (req, res) => {
   await fieldsValidation(
-    checkObjectID,
+    checkObjectId,
     makeOptional(checkUsername),
     makeOptional(checkEmail),
     makeOptional(checkUserRole)
@@ -83,7 +83,7 @@ export const updateUser: RequestHandler = asyncHandler(async (req, res) => {
 })
 
 export const deleteUser: RequestHandler = asyncHandler(async (req, res) => {
-  await fieldsValidation(checkObjectID)(req)
+  await fieldsValidation(checkObjectId)(req)
 
   const user = await User.findByIdAndDelete(req.params.id)
   if (!user) throw new ErrorResponse(404, 'User not found')

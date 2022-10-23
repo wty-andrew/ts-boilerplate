@@ -5,11 +5,10 @@ import { Result } from 'express-validator'
 import { isDev } from '../config'
 import { ErrorResponse } from '../common/errors'
 
-export const asyncHandler = (handler: RequestHandler): RequestHandler => (
-  req,
-  res,
-  next
-) => Promise.resolve(handler(req, res, next)).catch(next)
+export const asyncHandler =
+  (handler: RequestHandler): RequestHandler =>
+  (req, res, next) =>
+    Promise.resolve(handler(req, res, next)).catch(next)
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   if (res.headersSent) {

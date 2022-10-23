@@ -9,6 +9,7 @@ const config: Config.InitialOptions = {
   displayName: 'client',
   rootDir: '.',
   setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  testEnvironment: 'jsdom',
 }
 
 export default config

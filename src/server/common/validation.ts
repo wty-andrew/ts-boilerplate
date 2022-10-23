@@ -5,18 +5,18 @@ import {
   validationResult,
   ValidationChain,
 } from 'express-validator'
-import { ObjectID } from 'mongodb'
+import { ObjectId } from 'mongodb'
 
 import { Role } from '../models/User'
 
-export const fieldsValidation = (...rules: ValidationChain[]) => async (
-  req: Request
-): Promise<void> => {
-  await Promise.all(rules.map((rule) => rule.run(req)))
+export const fieldsValidation =
+  (...rules: ValidationChain[]) =>
+  async (req: Request): Promise<void> => {
+    await Promise.all(rules.map((rule) => rule.run(req)))
 
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) errors.throw()
-}
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) errors.throw()
+  }
 
 export const makeOptional = (rule: ValidationChain): ValidationChain =>
   rule.optional()
@@ -42,4 +42,4 @@ export const checkUserRole = body('role', 'Invalid role').isIn(
 
 export const checkToken = body('token').isString().notEmpty()
 
-export const checkObjectID = param('id', 'Invalid id').custom(ObjectID.isValid)
+export const checkObjectId = param('id', 'Invalid id').custom(ObjectId.isValid)
