@@ -10,8 +10,6 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   rootDir: '.',
   setupFilesAfterEnv: ['jest-extended'],
-  globalSetup: '<rootDir>/__tests__/config/globalSetup.ts',
-  globalTeardown: '<rootDir>/__tests__/config/globalTeardown.ts',
 }
 
 export default config

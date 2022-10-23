@@ -1,5 +1,4 @@
 import { RequestHandler, ErrorRequestHandler } from 'express'
-import { Error as MongooseError } from 'mongoose'
 import { Result } from 'express-validator'
 
 import { isDev } from '../config'
@@ -35,19 +34,6 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
       error: (err as Result)
         .array()
         .reduce((prev, curr) => ({ ...prev, [curr.param]: curr.msg }), {}),
-    })
-  }
-  if (err instanceof MongooseError.ValidationError) {
-    return res.status(400).json({
-      success: false,
-      message: 'Validation error',
-      error: Object.keys(err.errors).reduce(
-        (prev, curr) => ({
-          ...prev,
-          [curr]: err.errors[curr].message,
-        }),
-        {}
-      ),
     })
   }
 
