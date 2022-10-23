@@ -10,6 +10,9 @@ const config: Config.InitialOptions = {
   rootDir: '.',
   setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
   testEnvironment: 'jsdom',
+  moduleNameMapper: {
+    '\\.(css|glsl|vert|frag)$': 'identity-obj-proxy',
+  },
 }
 
 export default config
