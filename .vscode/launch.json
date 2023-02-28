@@ -6,13 +6,15 @@
     "configurations": [
       {
         "name": "Debug Server",
-        "program": "${workspaceFolder}/src/server/index.ts",
+        "program": "${workspaceFolder}/apps/server/src/index.ts",
         "request": "launch",
         "skipFiles": [
           "<node_internals>/**"
         ],
         "type": "node",
         "runtimeArgs": [
+          "--loader",
+          "ts-node/esm",
           "-r",
           "ts-node/register/transpile-only"
         ],
@@ -26,7 +28,6 @@
         "request": "launch",
         "url": "http://localhost:3001",
         "webRoot": "${workspaceFolder}",
-        "breakOnLoad": true,
         "pathMapping": {
           "__parcel_source_root": "${webRoot}"
         },

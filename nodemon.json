@@ -1,7 +1,0 @@
-{
-  "restartable": "rs",
-  "ignore": [".git", "node_modules/", "dist/", "**/*.test.ts"],
-  "exec": "ts-node --files",
-  "watch": ["src/server", "src/shared"],
-  "ext": "js,json,ts"
-}
