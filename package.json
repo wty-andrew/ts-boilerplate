@@ -6,18 +6,22 @@
   "scripts": {
     "dev:web": "yarn workspace web dev",
     "dev:server": "yarn workspace server dev",
+    "dev:docs": "yarn workspace website start",
     "build:web": "yarn workspace web build",
     "build:server": "yarn workspace server build",
+    "build:docs": "yarn workspace website build",
     "build": "concurrently \"yarn build:web\" \"yarn build:server\"",
     "test:web": "yarn workspace web test",
     "test:server": "yarn workspace server test",
     "test": "concurrently \"yarn test:web\" \"yarn test:server\"",
+    "serve:docs": "yarn workspace website serve",
     "lint": "eslint ."
   },
   "workspaces": {
     "packages": [
       "packages/*",
-      "apps/*"
+      "apps/*",
+      "website"
     ]
   },
   "devDependencies": {

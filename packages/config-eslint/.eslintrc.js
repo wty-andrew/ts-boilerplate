@@ -20,6 +20,9 @@ module.exports = {
       },
     },
   ],
+  rules: {
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+  },
   env: {
     browser: true,
     node: true,

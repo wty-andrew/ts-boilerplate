@@ -7,6 +7,7 @@ export const renderWithRouter = (
   route = '/'
 ): RenderResult => {
   return render(ui, {
+    // eslint-disable-next-line react/display-name
     wrapper: (props) => <MemoryRouter {...props} initialEntries={[route]} />,
   })
 }
