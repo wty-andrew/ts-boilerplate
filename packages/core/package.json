@@ -3,13 +3,22 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "peerDependencies": {
+    "@react-three/drei": "*",
+    "@react-three/fiber": "*",
+    "leva": "*",
     "react": "*",
-    "react-dom": "*"
+    "react-dom": "*",
+    "three": "*"
   },
   "devDependencies": {
+    "@react-three/drei": "^9.57.0",
+    "@react-three/fiber": "^8.11.5",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/three": "^0.149.0",
+    "leva": "^0.9.34",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "three": "^0.150.1"
   }
 }

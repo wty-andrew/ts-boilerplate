@@ -8,10 +8,14 @@
     "prebuild": "rimraf build"
   },
   "dependencies": {
+    "@react-three/drei": "^9.57.0",
+    "@react-three/fiber": "^8.11.5",
     "core": "workspace:^",
+    "leva": "^0.9.34",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.1"
+    "react-router-dom": "^6.8.1",
+    "three": "^0.150.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -19,6 +23,7 @@
     "@types/jest": "^29.4.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/three": "^0.149.0",
     "@types/webpack-env": "^1.18.0",
     "cross-env": "^7.0.3",
     "jest": "^29.4.3",
