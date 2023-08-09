@@ -20,8 +20,6 @@ if (isDev()) {
   app.use(morgan('dev'))
 }
 
-express.json()
-
 app.use(express.json())
 
 const cwd = path.dirname(fileURLToPath(import.meta.url))

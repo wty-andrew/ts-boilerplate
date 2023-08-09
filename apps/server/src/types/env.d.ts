@@ -1,7 +1,10 @@
-declare namespace NodeJS {
-  interface ProcessEnv {
-    readonly NODE_ENV: 'development' | 'production' | 'test'
-    readonly PORT: string
-    readonly BASE_URL: string
+export interface IProcessEnv {
+  NODE_ENV: 'development' | 'production' | 'test'
+  PORT: string
+}
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv extends Partial<IProcessEnv> {}
   }
 }
