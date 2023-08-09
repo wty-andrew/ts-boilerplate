@@ -1,17 +1,12 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter as Router } from 'react-router-dom'
 
 import './assets/styles/main.css'
-import App from './App'
+import App from './app'
 
 const root = createRoot(document.getElementById('root') as HTMLElement)
 root.render(
-  <Router>
+  <React.StrictMode>
     <App />
-  </Router>
+  </React.StrictMode>
 )
-
-if (module.hot) {
-  module.hot.accept()
-}

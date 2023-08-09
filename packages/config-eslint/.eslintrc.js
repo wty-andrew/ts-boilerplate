@@ -7,23 +7,17 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
   ],
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
-  overrides: [
-    {
-      files: ['**/*.tsx'],
-      rules: {
-        'react/prop-types': 'off',
-        'react/jsx-uses-react': 'off',
-        'react/react-in-jsx-scope': 'off',
-      },
-    },
-  ],
+  plugins: ['react-refresh'],
   rules: {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-empty-interface': 'off',
+    'react/prop-types': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
   },
   env: {
     browser: true,

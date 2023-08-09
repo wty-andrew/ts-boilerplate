@@ -5,8 +5,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./build/index.js",
     "dev": "cross-env NODE_ENV=development nodemon src/index.ts",
-    "build": "cross-env NODE_ENV=production tsc --build",
-    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest",
+    "build": "cross-env NODE_ENV=production tsc --build tsconfig.prod.json",
+    "test": "vitest",
     "prebuild": "rimraf build *.tsbuildinfo"
   },
   "dependencies": {
@@ -24,12 +24,12 @@
     "@types/supertest": "^2.0.12",
     "cross-env": "^7.0.3",
     "esm": "^3.2.25",
-    "jest": "^29.5.0",
     "nodemon": "^2.0.22",
     "rimraf": "^5.0.0",
     "supertest": "^6.3.3",
-    "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.6",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.1"
   }
 }
