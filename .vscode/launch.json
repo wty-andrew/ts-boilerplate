@@ -9,14 +9,7 @@
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}",
-            "breakOnLoad": true,
-            "pathMapping": {
-              "__parcel_source_root": "${webRoot}"
-            },
-            "skipFiles": [
-              "${workspaceFolder}/node_modules/**/*.js"
-            ]
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }
