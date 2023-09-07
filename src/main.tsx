@@ -1,7 +1,8 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './assets/styles/main.css'
+import '@mantine/core/styles.css'
+
+import App from './app'
 
 const root = createRoot(document.getElementById('root') as HTMLElement)
 root.render(
