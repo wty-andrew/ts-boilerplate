@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "mdx"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
