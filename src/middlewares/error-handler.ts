@@ -1,15 +1,12 @@
-import { RequestHandler, ErrorRequestHandler } from 'express'
-import { Error as MongooseError } from 'mongoose'
-import { Result } from 'express-validator'
+import type { ErrorRequestHandler, RequestHandler } from 'express'
 
-import { isDev } from '../config'
-import { ErrorResponse } from '../common/errors'
+import { ErrorResponse } from '../common/errors.js'
+import { isDev } from '../config.js'
 
-export const asyncHandler = (handler: RequestHandler): RequestHandler => (
-  req,
-  res,
-  next
-) => Promise.resolve(handler(req, res, next)).catch(next)
+export const asyncHandler =
+  (handler: RequestHandler): RequestHandler =>
+  (req, res, next) =>
+    Promise.resolve(handler(req, res, next)).catch(next)
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   if (res.headersSent) {
@@ -24,36 +21,9 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
       .status(err.statusCode)
       .json({ success: false, message: err.message })
   }
-  // hacky way to check if error comes from express-validator
-  if (
-    Object.getOwnPropertyNames(Result.prototype)
-      .filter((prop) => prop !== 'constructor')
-      .every((prop) => Object.prototype.hasOwnProperty.call(err, prop))
-  ) {
-    return res.status(400).json({
-      success: false,
-      message: 'Validation error',
-      error: (err as Result)
-        .array()
-        .reduce((prev, curr) => ({ ...prev, [curr.param]: curr.msg }), {}),
-    })
-  }
-  if (err instanceof MongooseError.ValidationError) {
-    return res.status(400).json({
-      success: false,
-      message: 'Validation error',
-      error: Object.keys(err.errors).reduce(
-        (prev, curr) => ({
-          ...prev,
-          [curr]: err.errors[curr].message,
-        }),
-        {}
-      ),
-    })
-  }
 
   res.status(500).json({
     success: false,
-    message: isDev() ? err.message : 'Unexpected condition',
+    message: isDev ? err.message : 'Unexpected condition',
   })
 }

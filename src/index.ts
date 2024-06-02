@@ -1,25 +1,19 @@
-import app from './app'
-import { connectToDatabase, disconnectFromDatabase } from './database'
-import { PORT, MONGODB_URI } from './config'
+import app from './app.js'
+import { PORT } from './config.js'
+import logger from './logger.js'
 
-process.on('SIGINT', () => {
-  disconnectFromDatabase(() => {
-    console.log('Database disconnected through app termination')
-    process.exit(0)
+const main = () => {
+  const server = app.listen(PORT, () => {
+    logger.info(`Server running on port ${PORT}`)
   })
-})
 
-const launch = async () => {
-  try {
-    const conn = await connectToDatabase(MONGODB_URI, 1000)
-    console.log(`Database connected: ${conn.host}`)
-  } catch (err) {
-    console.error('Failed to connect to database')
-    process.exit(1)
+  const signals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT']
+  for (const signal of signals) {
+    process.on(signal, () => {
+      logger.info(`Received ${signal}, shutting down`)
+      server.close(() => process.exit(0))
+    })
   }
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-  })
 }
 
-launch()
+main()
