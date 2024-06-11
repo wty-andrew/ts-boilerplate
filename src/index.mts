@@ -1,6 +1,6 @@
-import app from './app.js'
-import { PORT } from './config.js'
-import logger from './logger.js'
+import app from './app.mjs'
+import { PORT } from './config.mjs'
+import logger from './logger.mjs'
 
 const main = () => {
   const server = app.listen(PORT, () => {

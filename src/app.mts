@@ -4,10 +4,10 @@ import express from 'express'
 import pinoHttp from 'pino-http'
 import { v4 as uuidv4 } from 'uuid'
 
-import { isDev } from './config.js'
-import logger from './logger.js'
-import { errorHandler } from './middlewares/error-handler.js'
-import router from './routes/index.js'
+import { isDev } from './config.mjs'
+import logger from './logger.mjs'
+import { errorHandler } from './middlewares/error-handler.mjs'
+import router from './routes/index.mjs'
 
 const app = express()
 

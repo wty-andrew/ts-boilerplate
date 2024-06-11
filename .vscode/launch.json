@@ -5,7 +5,7 @@
       "name": "Debug Program",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/src/index.ts",
+      "program": "${workspaceFolder}/src/index.mts",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
       "skipFiles": [
         "<node_internals>/**"

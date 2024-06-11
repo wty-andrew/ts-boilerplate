@@ -1,7 +1,7 @@
 import type { ErrorRequestHandler, RequestHandler } from 'express'
 
-import { ErrorResponse } from '../common/errors.js'
-import { isDev } from '../config.js'
+import { ErrorResponse } from '../common/errors.mjs'
+import { isDev } from '../config.mjs'
 
 export const asyncHandler =
   (handler: RequestHandler): RequestHandler =>

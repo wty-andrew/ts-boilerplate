@@ -20,6 +20,9 @@
             nodejs_22
             nodejs_22.pkgs.pnpm
           ];
+
+          OTEL_SERVICE_NAME="sandbox";
+          OTEL_EXPORTER_OTLP_PROTOCOL="grpc";
         };
       });
     };
