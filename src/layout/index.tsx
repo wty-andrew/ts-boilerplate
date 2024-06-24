@@ -1,13 +1,14 @@
-import { NavLink, Outlet } from 'react-router-dom'
 import { AppShell, Box, Container, Stack, UnstyledButton } from '@mantine/core'
 import { IconHome2, IconSettings } from '@tabler/icons-react'
-import { type TablerIconsProps } from '@tabler/icons-react'
+import type { IconProps } from '@tabler/icons-react'
+import type { ReactNode } from 'react'
+import { NavLink, Outlet } from 'react-router-dom'
 
 import ColorModeSwitch from './color-mode-switch'
 import classes from './index.module.css'
 
 interface NavbarLinkProps {
-  icon: (props: TablerIconsProps) => JSX.Element
+  icon: (props: IconProps) => ReactNode
   to: string
 }
 
@@ -46,6 +47,7 @@ const Layout = () => {
       <AppShell.Navbar p="md">
         <Stack align="center" justify="center" gap={2}>
           {links.map(({ icon, to }, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey:
             <NavbarLink key={index} icon={icon} to={to} />
           ))}
         </Stack>

@@ -1,5 +1,5 @@
 import { ActionIcon, useMantineColorScheme } from '@mantine/core'
-import { IconSun, IconMoon } from '@tabler/icons-react'
+import { IconMoon, IconSun } from '@tabler/icons-react'
 
 import classes from './index.module.css'
 

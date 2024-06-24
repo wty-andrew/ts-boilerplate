@@ -1,4 +1,4 @@
-import { createRoutesFromElements, Route } from 'react-router-dom'
+import { Route, createRoutesFromElements } from 'react-router-dom'
 
 import Layout from '../layout'
 import Home from './home'

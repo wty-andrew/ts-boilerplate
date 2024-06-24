@@ -1,8 +1,8 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { MantineProvider } from '@mantine/core'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import theme from './theme'
 import routes from './routes'
+import theme from './theme'
 
 const router = createBrowserRouter(routes)
 
