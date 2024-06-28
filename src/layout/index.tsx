@@ -35,7 +35,7 @@ const Layout = () => {
     <AppShell
       header={{ height: 56 }}
       navbar={{ width: 80, breakpoint: 0 }}
-      padding="md"
+      padding={0}
     >
       <AppShell.Header>
         <Container fluid className={classes.header}>
