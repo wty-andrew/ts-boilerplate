@@ -1,4 +1,4 @@
-import { Deck, Slide, Heading, DefaultTemplate } from 'spectacle'
+import { Deck, DefaultTemplate, Heading, Slide } from 'spectacle'
 
 import theme from './theme'
 
