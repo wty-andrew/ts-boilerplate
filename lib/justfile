@@ -1,0 +1,12 @@
+[private]
+default:
+  @just --list --unsorted
+
+dev:
+  cargo watch -i "pkg/*" -s "wasm-pack build --out-name index --target bundler"
+
+test:
+  wasm-pack test --headless --firefox
+
+build:
+  wasm-pack build --out-name index --target bundler
