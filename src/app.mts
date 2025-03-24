@@ -4,6 +4,7 @@ import express from 'express'
 import pinoHttp from 'pino-http'
 import { v4 as uuidv4 } from 'uuid'
 
+import { NotFoundError } from './common/errors.mjs'
 import { isDev } from './config.mjs'
 import logger from './logger.mjs'
 import { errorHandler } from './middlewares/error-handler.mjs'
@@ -35,6 +36,8 @@ router(app)
 app.get('/healthz', (req, res) => {
   res.status(200).send()
 })
+
+app.use((req, res, next) => next(new NotFoundError('Resource not found')))
 
 app.use(errorHandler)
 
