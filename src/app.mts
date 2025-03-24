@@ -36,8 +36,6 @@ app.get('/healthz', (req, res) => {
   res.status(200).send()
 })
 
-app.use((req, res, next) => res.status(404).send())
-
 app.use(errorHandler)
 
 export default app
