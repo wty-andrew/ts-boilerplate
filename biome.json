@@ -1,15 +1,13 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.7.3/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
-    "ignore": [
-      "dist/**"
+    "includes": [
+      "src/**"
     ]
   },
   "formatter": {
-    "indentStyle": "space"
-  },
-  "organizeImports": {
-    "enabled": true
+    "indentStyle": "space",
+    "lineWidth": 88
   },
   "linter": {
     "enabled": true,
@@ -17,10 +15,18 @@
       "recommended": true
     }
   },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
   "javascript": {
     "formatter": {
       "semicolons": "asNeeded",
-      "quoteStyle": "single"
+      "quoteStyle": "single",
+      "trailingCommas": "es5"
     }
   },
   "vcs": {
